@@ -1,0 +1,19 @@
+build:
+  cuda: "11.2"
+  gpu: true
+  python_version: "3.8"
+  system_packages:
+    - "libgl1-mesa-glx"
+    - "libglib2.0-0"
+  python_packages:
+    - "numpy==1.22.3"
+    - "ipython==7.21.0"
+    - "matplotlib==3.5.1"
+    - "flax==0.4.1"
+    - "tensorflow==2.8.0"
+    - "ml-collections==0.1.1"
+  run:
+    - pip install --upgrade pip
+    - pip install jax[cuda11_cudnn805] -f https://storage.googleapis.com/jax-releases/jax_releases.html
+
+predict: "predict.py:Predictor"
