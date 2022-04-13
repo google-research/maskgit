@@ -6,7 +6,7 @@ build:
     - "libgl1-mesa-glx"
     - "libglib2.0-0"
   python_packages:
-    - "numpy==1.22.3"
+    - "numpy==1.21.1"
     - "ipython==7.21.0"
     - "matplotlib==3.5.1"
     - "flax==0.4.1"

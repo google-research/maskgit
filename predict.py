@@ -1,3 +1,6 @@
+import os
+os.environ["XLA_FLAGS"] = "--xla_gpu_force_compilation_parallelism=1"
+
 import tempfile
 import numpy as np
 import jax
@@ -41,6 +44,10 @@ class Predictor(BasePredictor):
             default=256,
             description="Choose the size of the generated image. Output will generate 8 images.",
         ),
+        seed: int = Input(
+            default=42,
+            description="set random seed",
+        ),
         image: Path = Input(
             default=None,
             description="Provide input image for Class-conditional Image Editing. "
@@ -54,7 +61,7 @@ class Predictor(BasePredictor):
         ),
     ) -> Path:
 
-        rng = jax.random.PRNGKey(42)
+        rng = jax.random.PRNGKey(seed)
         rng, sample_rng = jax.random.split(rng)
         label = int(category.split(")")[0])
         generator = self.generator_512 if image_size == 512 else self.generator_256
@@ -76,6 +83,7 @@ class Predictor(BasePredictor):
 
             # Visualize
             result_img = get_res_images(results)
+            plt.clf()
             plt.imshow(result_img)
             plt.axis("off")
             plt.savefig(str(out_path), bbox_inches="tight", dpi=600)
@@ -99,6 +107,7 @@ class Predictor(BasePredictor):
             ), "The box provided is not the range of the input image."
 
             # visualize it with our bounding box
+            plt.clf()
             fig, ax = plt.subplots(2, 1, gridspec_kw={"height_ratios": [1, 8]})
             plt.subplots_adjust(hspace=0.05)
             ax[0].imshow(img)
