@@ -50,7 +50,7 @@ def mask_by_random_topk(rng, mask_len, probs, temperature=1.0):
       rng, probs.shape)
   sorted_confidence = jnp.sort(confidence, axis=-1)
   # Obtains cut off threshold given the mask lengths.
-  cut_off = jnp.take_along_axis(sorted_confidence, mask_len, axis=-1)
+  cut_off = jnp.take_along_axis(sorted_confidence, mask_len.astype(jnp.int32), axis=-1)
   # Masks tokens with lower confidence.
   masking = (confidence < cut_off)
   return masking
@@ -140,7 +140,7 @@ def decode(inputs,
     # Computes the probabilities of each selected tokens.
     probs = jax.nn.softmax(logits, axis=-1)
     selected_probs = jnp.squeeze(
-        jnp.take_along_axis(probs, jnp.expand_dims(sampled_ids, -1), -1), -1)
+        jnp.take_along_axis(probs, jnp.expand_dims(sampled_ids.astype(jnp.int32), -1), -1), -1)
     # Ignores the tokens given in the input by overwriting their confidence.
     selected_probs = jnp.where(unknown_map, selected_probs,
                                _CONFIDENCE_OF_KNOWN_TOKENS)
