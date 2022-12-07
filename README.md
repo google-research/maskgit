@@ -6,6 +6,8 @@ Official Jax Implementation of the CVPR 2022 Paper
 
 [[Paper](https://arxiv.org/abs/2202.04200)] [[Project Page](https://masked-generative-image-transformer.github.io/)] [[Demo Colab](https://colab.research.google.com/github/google-research/maskgit/blob/main/MaskGIT_demo.ipynb)]
 
+Try the web demo with Class-conditional Image Synthesis and Editing here [![Replicate](https://replicate.com/google-research/maskgit/badge)](https://replicate.com/google-research/maskgit)
+
 ![teaser](imgs/teaser.png)
 
 ## Summary
